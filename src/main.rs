@@ -2,8 +2,9 @@
 extern crate clap;
 
 use clap::{App, Arg};
+//use raster::Image;
 //use std::env;
-//use image::{GenericImageView,imageops};
+use image::{GenericImageView, imageops};
 
 fn main() {
     let matches = App::new("img-print")
@@ -33,26 +34,42 @@ fn main() {
         )
         .get_matches();
     let name = matches.value_of("input").unwrap();
-    println!("filename is: {}", name);
-    // let args: Vec<String> = env::args().collect();
-    // let img = image::open(& args[1]).unwrap();
-    // let (x, y) = img.dimensions();
-    // //TODO have output dimensions as args
-    // let dim_x = 80;
-    // let dim_y =(y /(x/120))/2;
 
-    // let img_scaled = img.resize(dim_x, dim_x, imageops::FilterType::Nearest);
-    // let mut img_grey = imageops::colorops::grayscale(&img_scaled);
 
-    // for (x, _, pixel) in img_grey.enumerate_pixels_mut() {
-    //     if pixel[0] > 127 {
-    //         print!("#");
-    //     }
-    //     else {
-    //         print!{" "};
-    //     }
-    //     if x == dim_x-1 {
-    //         print!("\n");
-    //     }
-    // }
+    let img = image::open(&name).unwrap();
+
+    let (x, y) = img.dimensions();
+
+
+    let dim_x = match matches.value_of("width")
+    {
+        Some(x) => x.parse::<u32>().unwrap_or(50),
+        None => 40,
+    };
+    let dim_y = match matches.value_of("height")
+    {
+        Some(x) => x.parse::<u32>().unwrap_or(50),
+        None => (( f64::from(dim_x)*f64::from(y)/ f64::from(x))/2.0) as u32
+    };
+
+
+    let mut img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Lanczos3);
+
+    if matches.is_present("greyscale")
+    {
+         img_scaled = img_scaled.grayscale();
+    }
+    let img_buffer = img_scaled.to_rgba();
+
+    for (x, _, pixel) in img_buffer.enumerate_pixels() {
+        if pixel[0] > 127 {
+            print!("#");
+        }
+        else {
+            print!{" "};
+        }
+        if x == dim_x-1 {
+            print!("\n");
+        }
+    }
 }
