@@ -58,7 +58,7 @@ fn main() {
 
     let output_char = matches.value_of("output_char").unwrap_or("▇");
 
-    let img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Nearest);
+    let img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::CatmullRom);
     let img_buffer = img_scaled.to_rgba();
     if matches.is_present("greyscale")
     {
