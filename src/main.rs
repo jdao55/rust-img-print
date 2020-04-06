@@ -1,10 +1,9 @@
 //extern crate image;
-extern crate clap;
-
+//extern crate clap;
+mod print_util;
 use clap::{App, Arg};
-//use raster::Image;
-//use std::env;
 use image::{GenericImageView, imageops};
+
 
 fn main() {
     let matches = App::new("img-print")
@@ -61,15 +60,9 @@ fn main() {
     }
     let img_buffer = img_scaled.to_rgba();
 
-    for (x, _, pixel) in img_buffer.enumerate_pixels() {
-        if pixel[0] > 127 {
-            print!("#");
-        }
-        else {
-            print!{" "};
-        }
-        if x == dim_x-1 {
+    img_buffer.enumerate_rows().for_each(
+        |(_, row)|{
+            row.for_each(|(_, _,pixel)| {print_util::print_char_rgb(pixel, '#');});
             print!("\n");
-        }
-    }
+    });
 }
