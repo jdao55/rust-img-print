@@ -52,11 +52,11 @@ fn main() {
     };
     let dim_y = match matches.value_of("height")
     {
-        Some(x) => x.parse::<u32>().unwrap_or(50),
+        Some(x) => x.parse::<u32>().unwrap(),
         None => (( f64::from(dim_x)*f64::from(y)/ f64::from(x))/2.0) as u32
     };
 
-    let output_char = matches.value_of("output_char").unwrap_or("#");
+    let output_char = matches.value_of("output_char").unwrap_or("▇");
 
     let img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Nearest);
     let img_buffer = img_scaled.to_rgba();
