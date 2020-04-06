@@ -52,17 +52,22 @@ fn main() {
     };
 
 
-    let mut img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Lanczos3);
-
+    let img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Nearest);
+    let img_buffer = img_scaled.to_rgba();
     if matches.is_present("greyscale")
     {
-         img_scaled = img_scaled.grayscale();
+        img_buffer.enumerate_rows().for_each(
+            |(_, row)|{
+                row.for_each(|(_, _,pixel)| {print_util::print_char_gs(pixel, '#');});
+                print!("\n");
+            });
     }
-    let img_buffer = img_scaled.to_rgba();
-
-    img_buffer.enumerate_rows().for_each(
-        |(_, row)|{
-            row.for_each(|(_, _,pixel)| {print_util::print_char_rgb(pixel, '#');});
-            print!("\n");
-    });
+    else
+    {
+        img_buffer.enumerate_rows().for_each(
+            |(_, row)|{
+                row.for_each(|(_, _,pixel)| {print_util::print_char_rgb(pixel, '#');});
+                print!("\n");
+            });
+    }
 }
