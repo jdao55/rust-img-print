@@ -26,6 +26,11 @@ fn main() {
                 .required(false)
                 .index(3))
         .arg(
+            Arg::with_name("output_char")
+                .help("output character")
+                .required(false)
+                .index(4))
+        .arg(
             Arg::with_name("greyscale")
                 .short("g")
                 .long("greyscale")
@@ -51,6 +56,7 @@ fn main() {
         None => (( f64::from(dim_x)*f64::from(y)/ f64::from(x))/2.0) as u32
     };
 
+    let output_char = matches.value_of("output_char").unwrap_or("#");
 
     let img_scaled = img.resize_exact(dim_x, dim_y, imageops::FilterType::Nearest);
     let img_buffer = img_scaled.to_rgba();
@@ -58,7 +64,7 @@ fn main() {
     {
         img_buffer.enumerate_rows().for_each(
             |(_, row)|{
-                row.for_each(|(_, _,pixel)| {print_util::print_char_gs(pixel, '#');});
+                row.for_each(|(_, _,pixel)| {print_util::print_char_gs(pixel, output_char);});
                 print!("\n");
             });
     }
@@ -66,7 +72,7 @@ fn main() {
     {
         img_buffer.enumerate_rows().for_each(
             |(_, row)|{
-                row.for_each(|(_, _,pixel)| {print_util::print_char_rgb(pixel, '#');});
+                row.for_each(|(_, _,pixel)| {print_util::print_char_rgb(pixel, output_char);});
                 print!("\n");
             });
     }
