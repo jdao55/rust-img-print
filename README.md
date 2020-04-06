@@ -1,2 +1,2 @@
 # rust-img-print
-image to ascii converter impelented in rust (wip)
+rust port of my c++ implementation
