@@ -14,7 +14,9 @@ git clone https://github.com/jdao55/img-print.git && cd img-print
 ```
 cargo build --release
 ```
-Execuatable can be found at rust-img-print/tartget/release/img-print
+Execuatable can be found at 
+```
+rust-img-print/tartget/release/img-print
 ```
 # Usage 
 ```
