@@ -1,6 +1,8 @@
 # rust-img-print
-Print images to 24 bit termials as text
+Print images to 24 bit termials as text 
  
+ ![image created](tux_example.png?raw=true "") 
+  
 # Building
 1. clone repository 
 ```
