@@ -1,9 +1,9 @@
 //extern crate image;
 //extern crate clap;
-mod print_util;
+
 use clap::{App, Arg};
 use image::{GenericImageView, imageops};
-
+use img_print::print_util;
 
 fn main() {
     let matches = App::new("img-print")

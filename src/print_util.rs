@@ -1,4 +1,4 @@
-extern crate image;
+
 use image::Rgba;
 
 pub fn print_char_rgb(pixel:& Rgba<u8>, c: &str) {
