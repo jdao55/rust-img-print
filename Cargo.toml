@@ -1,5 +1,5 @@
 [package]
-name = "img_ascii"
+name = "img_print"
 version = "0.1.0"
 authors = ["joe dao <joedao55@gmail.com>"]
 edition = "2018"
