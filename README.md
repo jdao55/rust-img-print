@@ -14,7 +14,7 @@ cargo build --release
 ```
 Execuatable can be found at 
 ```
-rust-img-print/tartget/release/img-print
+rust-img-print/target/release/img-print
 ```
 # Usage 
 ```
