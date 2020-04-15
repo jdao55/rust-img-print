@@ -1,5 +1,5 @@
 # rust-img-print
-Print images to 24 bit termials as text 
+Print images to 24 bit colour termials as text 
  
  ![image created](tux_example.png?raw=true "") 
   
