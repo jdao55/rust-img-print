@@ -6,7 +6,7 @@ Print images to 24 bit colour termials as text
 # Building
 1. clone repository 
 ```
-git clone https://github.com/jdao55/img-print.git && cd img-print
+git clone https://github.com/jdao55/rust-img-print.git && cd rust-img-print
 ```
 2. Build using cargo
 ```
