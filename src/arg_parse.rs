@@ -47,7 +47,7 @@ impl ImageArgs {
 
         let width = match matches.value_of("width") {
             Some(x) => x.parse::<u32>().unwrap_or(50),
-            None => 40,
+            None => 50,
         };
         let height: Option<u32> = match matches.value_of("height") {
             Some(x) => Some(x.parse::<u32>().unwrap()),
