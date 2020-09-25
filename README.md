@@ -1,4 +1,6 @@
 # rust-img-print
+[![Build Status](https://travis-ci.org/jdao55/rust-img-print.svg?branch=master)](https://travis-ci.org/jdao55/rust-img-print)
+
 Print images to 24 bit colour termials as text 
  
  ![image created](tux_example.png?raw=true "") 
