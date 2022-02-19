@@ -1,4 +1,4 @@
-use image::{imageops, GenericImageView};
+use image::GenericImageView;
 use img_print::arg_parse;
 use img_print::print_util;
 
@@ -11,11 +11,7 @@ fn main() {
 
     args.update_height(x, y);
 
-    let img_scaled = img.resize_exact(
-        args.width,
-        args.height.unwrap(),
-        imageops::FilterType::CatmullRom,
-    );
+    let img_scaled = img.resize_exact(args.width, args.height.unwrap(), args.filtertype);
     let img_buffer = img_scaled.to_rgba();
     if args.ascii {
         img_buffer.enumerate_rows().for_each(|(_, row)| {

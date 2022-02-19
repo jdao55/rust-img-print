@@ -1,4 +1,5 @@
 use clap::{App, Arg};
+use image::imageops::FilterType;
 
 pub struct ImageArgs {
     pub filename: String,
@@ -7,6 +8,7 @@ pub struct ImageArgs {
     pub greyscale: bool,
     pub output_char: String,
     pub ascii: bool,
+    pub filtertype: FilterType,
 }
 impl ImageArgs {
     pub fn new() -> ImageArgs {
@@ -36,7 +38,7 @@ impl ImageArgs {
                 Arg::with_name("output_char")
                     .help("output character")
                     .required(false)
-                    .index(4),
+                    .takes_value(true),
             )
             .arg(
                 Arg::with_name("greyscale")
@@ -49,6 +51,14 @@ impl ImageArgs {
                     .short("a")
                     .long("ascii")
                     .help("turn on ascii output"),
+            )
+            .arg(
+                Arg::with_name("filtertype")
+                    .short("f")
+                    .required(false)
+                    .long("filtertype")
+                    .help("select scaling algorithm")
+                    .takes_value(true),
             )
             .get_matches();
         let filename = matches.value_of("input").unwrap();
@@ -64,6 +74,14 @@ impl ImageArgs {
         let greyscale = matches.is_present("greyscale");
         let ascii = matches.is_present("ascii");
         let output_char = matches.value_of("output_char").unwrap_or("▇");
+        let filtertype = match matches.value_of("filtertype") {
+            Some("Nearest") => FilterType::Nearest,
+            Some("Triangle") => FilterType::Triangle,
+            Some("CatmullRom") => FilterType::CatmullRom,
+            Some("Gaussian") => FilterType::Gaussian,
+            Some("Lanczos3") => FilterType::Lanczos3,
+            _ => FilterType::Lanczos3,
+        };
         ImageArgs {
             filename: String::from(filename),
             width,
@@ -71,6 +89,7 @@ impl ImageArgs {
             greyscale,
             output_char: String::from(output_char),
             ascii,
+            filtertype,
         }
     }
 
