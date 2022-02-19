@@ -1,10 +1,12 @@
 use clap::{App, Arg};
+
 pub struct ImageArgs {
     pub filename: String,
     pub width: u32,
     pub height: Option<u32>,
     pub greyscale: bool,
     pub output_char: String,
+    pub ascii: bool,
 }
 impl ImageArgs {
     pub fn new() -> ImageArgs {
@@ -42,6 +44,12 @@ impl ImageArgs {
                     .long("greyscale")
                     .help("turn on greyscale output"),
             )
+            .arg(
+                Arg::with_name("ascii")
+                    .short("a")
+                    .long("ascii")
+                    .help("turn on ascii output"),
+            )
             .get_matches();
         let filename = matches.value_of("input").unwrap();
 
@@ -54,6 +62,7 @@ impl ImageArgs {
             None => None,
         };
         let greyscale = matches.is_present("greyscale");
+        let ascii = matches.is_present("ascii");
         let output_char = matches.value_of("output_char").unwrap_or("▇");
         ImageArgs {
             filename: String::from(filename),
@@ -61,6 +70,7 @@ impl ImageArgs {
             height,
             greyscale,
             output_char: String::from(output_char),
+            ascii,
         }
     }
 

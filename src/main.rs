@@ -17,19 +17,28 @@ fn main() {
         imageops::FilterType::CatmullRom,
     );
     let img_buffer = img_scaled.to_rgba();
-    if args.greyscale {
+    if args.ascii {
         img_buffer.enumerate_rows().for_each(|(_, row)| {
             row.for_each(|(_, _, pixel)| {
-                print_util::print_char_gs(pixel, &args.output_char);
+                print!("{}", print_util::char_from_density(pixel));
             });
             print!("\n");
         });
     } else {
-        img_buffer.enumerate_rows().for_each(|(_, row)| {
-            row.for_each(|(_, _, pixel)| {
-                print_util::print_char_rgb(pixel, &args.output_char);
+        if args.greyscale {
+            img_buffer.enumerate_rows().for_each(|(_, row)| {
+                row.for_each(|(_, _, pixel)| {
+                    print_util::print_char_gs(pixel, &args.output_char);
+                });
+                print!("\n");
             });
-            print!("\n");
-        });
+        } else {
+            img_buffer.enumerate_rows().for_each(|(_, row)| {
+                row.for_each(|(_, _, pixel)| {
+                    print_util::print_char_rgb(pixel, &args.output_char);
+                });
+                print!("\n");
+            });
+        }
     }
 }
